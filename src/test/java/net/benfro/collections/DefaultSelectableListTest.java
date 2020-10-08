@@ -54,7 +54,7 @@ class DefaultSelectableListTest {
 
       @BeforeEach
       void setUp() {
-         instance = new DefaultSelectableList(GlazedLists.eventList(Lists.newArrayList("A", "B", "C")));
+         instance = new DefaultSelectableList<>(GlazedLists.eventList(Lists.newArrayList("A", "B", "C")));
          instance.setSelectedElement("A");
       }
 
@@ -95,7 +95,7 @@ class DefaultSelectableListTest {
 
       @BeforeEach
       void setUp() {
-         instance = new DefaultSelectableList(GlazedLists.eventList(Lists.newArrayList("A", "B", "C")));
+         instance = new DefaultSelectableList<>(GlazedLists.eventList(Lists.newArrayList("A", "B", "C")));
          listener = Mockito.mock(PropertyChangeListener.class);
          instance.addPropertyChangeListener(listener);
       }

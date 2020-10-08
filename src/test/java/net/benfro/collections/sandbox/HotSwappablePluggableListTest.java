@@ -1,4 +1,4 @@
-package net.benfro.collections;
+package net.benfro.collections.sandbox;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;

@@ -2,10 +2,7 @@ package net.benfro.collections;
 
 import com.google.common.collect.Lists;
 import org.jdesktop.observablecollections.ObservableListListener;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import java.beans.PropertyChangeListener;
@@ -20,6 +17,7 @@ class DefaultObservableListTest {
    private DefaultObservableList<String> instance;
 
    @Nested
+   @DisplayName("An empty DefaultObservableList")
    class TestWithEmptyList {
 
       @BeforeEach
@@ -28,27 +26,32 @@ class DefaultObservableListTest {
       }
 
       @Test
+      @DisplayName("should not support elements property changes")
       void supportsElementPropertyChanged() {
          assertFalse(instance.supportsElementPropertyChanged());
       }
 
       @Test
+      @DisplayName("should have size == 0")
       void size() {
          assertEquals(0, instance.size());
       }
 
       @Test
+      @DisplayName("should be empty")
       void isEmpty() {
          assertTrue(instance.isEmpty());
       }
 
       @Test
+      @DisplayName("should not ackowledge to contain an arbitrary object")
       void contains() {
          assertFalse(instance.contains("B"));
       }
    }
 
    @Nested
+   @DisplayName("An DefaultObservableList with three element")
    class TestWithSomeData {
 
       @BeforeEach
@@ -57,46 +60,50 @@ class DefaultObservableListTest {
       }
 
       @Test
+      @DisplayName("should have size == 3")
       void size() {
          assertEquals(3, instance.size());
       }
 
       @Test
+      @DisplayName("should not be empty")
       void isEmpty() {
          assertFalse(instance.isEmpty());
       }
 
       @Test
+      @DisplayName("should affirm containment of an object which is put in it")
       void contains() {
          assertTrue(instance.contains("B"));
       }
 
       @Test
+      @DisplayName("should be able to spawn an Iterator")
       void iterator() {
          assertNotNull(instance.iterator());
       }
 
       @Test
-      void toArray() {
-         Object[] objects = instance.toArray();
-         assertEquals(3, objects.length);
-         assertTrue(objects instanceof Object[]);
+      @DisplayName("should be able to spawn an object array with size == 3")
+      void toObjectArray() {
+         assertEquals(3, instance.toArray().length);
       }
 
       @Test
-      void toArray1() {
-         String[] strings = instance.toArray(new String[instance.size()]);
-         assertEquals(3, strings.length);
-         assertTrue(strings instanceof String[]);
+      @DisplayName("should be able to spawn an type array with size == 3")
+      void toTypeArray() {
+         assertEquals(3, instance.toArray(new String[0]).length);
       }
 
       @Test
+      @DisplayName("should increase in size when added to")
       void add() {
          instance.add("D");
          assertEquals(4, instance.size());
       }
 
       @Test
+      @DisplayName("should decrease in size when removed from")
       void remove() {
          assertTrue(instance.remove("C"));
          assertEquals(2, instance.size());
@@ -108,18 +115,21 @@ class DefaultObservableListTest {
       }
 
       @Test
+      @DisplayName("should increase in size when a collection is added to it")
       void addAll() {
          instance.addAll(Lists.newArrayList("D", "E"));
          assertEquals(5, instance.size());
       }
 
       @Test
-      public void addAll1() {
+      @DisplayName("should increase in size when a collection is added to it at an index")
+      public void addAllToIndex() {
          instance.addAll(1, Lists.newArrayList("D", "E"));
          assertEquals(5, instance.size());
       }
 
       @Test
+      @DisplayName("should be empty after all elements are removed")
       public void removeAll() {
          assertTrue(instance.removeAll(Lists.newArrayList("A", "B", "C")));
          assertTrue(instance.isEmpty());
@@ -130,6 +140,7 @@ class DefaultObservableListTest {
       }
 
       @Test
+      @DisplayName("should be empty after list is cleared")
       public void clear() {
          instance.clear();
          assertTrue(instance.isEmpty());

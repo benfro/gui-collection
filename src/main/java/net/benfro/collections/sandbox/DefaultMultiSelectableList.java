@@ -1,8 +1,9 @@
-package net.benfro.collections;
+package net.benfro.collections.sandbox;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import com.google.common.collect.Lists;
+import net.benfro.collections.DefaultObservableList;
 
 import java.util.ArrayList;
 import java.util.List;

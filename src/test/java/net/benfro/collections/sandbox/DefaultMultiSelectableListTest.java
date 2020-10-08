@@ -1,4 +1,4 @@
-package net.benfro.collections;
+package net.benfro.collections.sandbox;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

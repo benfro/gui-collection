@@ -1,4 +1,4 @@
-package net.benfro.collections;
+package net.benfro.collections.sandbox;
 
 import java.util.List;
 
