@@ -30,7 +30,7 @@ class DefaultMultiSelectableListTest {
    @BeforeEach
    void setUp() {
       MockitoAnnotations.openMocks(this);
-      instance = new DefaultMultiSelectableList<>(GlazedLists.eventListOf("A", "B", "C", "D", "E", "F"));
+      instance = DefaultMultiSelectableList.ofThreadSafe(GlazedLists.eventListOf("A", "B", "C", "D", "E", "F"));
       instance.addPropertyChangeListener(mock);
    }
 
@@ -66,7 +66,7 @@ class DefaultMultiSelectableListTest {
    @Test
    void testSelectMoreElement() {
       instance.selectElements("E", "B", "F");
-      assertEquals(Lists.newArrayList("B", "E", "F"), instance.getSelectedElements());
+      assertEquals(Lists.newArrayList("E", "B", "F"), instance.getSelectedElements());
 
       verify(mock, times(3)).propertyChange(eventCaptor.capture());
    }
@@ -77,6 +77,41 @@ class DefaultMultiSelectableListTest {
       instance.deselectElements("E");
       assertTrue(instance.getSelectedElements().isEmpty());
       verify(mock, times(2)).propertyChange(eventCaptor.capture());
+   }
+
+   @Test
+   void testClearSelected() {
+      instance.selectElements("E", "B", "F");
+      instance.clearSelected();
+
+      verify(mock, times(6)).propertyChange(eventCaptor.capture());
+   }
+
+   @Test
+   void testRemove() {
+      instance.selectElements("F");
+      instance.remove("F");
+      assertTrue(instance.getSelectedElements().isEmpty());
+
+      verify(mock, times(2)).propertyChange(eventCaptor.capture());
+   }
+
+   @Test
+   void testRemoveAtIndex() {
+      instance.selectElements("E");
+      instance.remove(4);
+      assertTrue(instance.getSelectedElements().isEmpty());
+
+      verify(mock, times(2)).propertyChange(eventCaptor.capture());
+   }
+
+   @Test
+   void testRemoveAll() {
+      instance.selectElements("A", "B", "E");
+      instance.removeAll(instance);
+      assertTrue(instance.getSelectedElements().isEmpty());
+
+      verify(mock, times(6)).propertyChange(eventCaptor.capture());
    }
 
    @Test
